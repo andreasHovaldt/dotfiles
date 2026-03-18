@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# chezmoi:modify
+
+CONTENT=$(cat)  # read current file
+
+echo "$CONTENT"
+
+if ! echo "$CONTENT" | grep -qF '_launch=Meta+Return'; then
+    printf '\n[services][org.wezfurlong.wezterm.desktop]\n_launch=Meta+Return\n'
+fi
