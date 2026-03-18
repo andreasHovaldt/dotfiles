@@ -1,0 +1,11 @@
+README.md
+
+{{ if ne .shellType "zsh" }}
+.zshrc
+.p10k.zsh
+{{ end }}
+
+{{ if ne .shellType "bash" }}
+.bashrc
+{{ end }}
+

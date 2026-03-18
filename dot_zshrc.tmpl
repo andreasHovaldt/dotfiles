@@ -4,11 +4,9 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-{{- if eq .chezmoi.osRelease.prettyName "CachyOS" -}}
+{{ if eq .chezmoi.osRelease.prettyName "CachyOS" }}
 source /usr/share/cachyos-zsh-config/cachyos-config.zsh
-{{- end -}}
-
+{{ end }}
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -29,8 +27,7 @@ source ~/.config/pia-vpn/vpn-functions.sh
 
 # Alias
 alias open="xdg-open"
-
-{{- if .hasMiniForge -}}
+{{ if .hasMiniForge }}
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/{{- .chezmoi.username -}}/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -46,7 +43,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba shell init' !!
 export MAMBA_EXE='/home/{{- .chezmoi.username -}}/miniforge3/bin/mamba';
@@ -59,13 +55,12 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-{{- end -}}
+{{ end }}
 
-
-{{- if .hasPixi -}}
+{{ if .hasPixi }}
 # Pixi - Add to path
 export PATH="/home/{{- .chezmoi.username -}}/.pixi/bin:$PATH"
 
 # Pixi - Autocompletion
 eval "$(pixi completion --shell zsh)"
-{{- end -}}
+{{ end }}

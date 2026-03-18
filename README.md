@@ -1,8 +1,16 @@
 # dotfiles
 
+## Installation
+
+Arch:
+
+```bash
+sudo pacman -S chezmoi
+```
+
 ## Recommendation
 
-Install the following:
+Install the following beforehand:
 
 ### BitWarden CLI
 
@@ -36,3 +44,29 @@ curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Min
 ```
 
 Do not add to .zsh, it is handled by chezmoi
+
+## Usage
+
+Pull dotfiles:
+
+```bash
+chezmoi init https://github.com/andreasHovaldt/dotfiles.git
+```
+
+Check pending dotfile changes:
+
+```bash
+chezmoi diff
+```
+
+Appy dotfile changes:
+
+```bash
+chezmoi apply
+```
+
+### One-liner for directly applying dotfiles
+
+```bash
+chezmoi init --apply andreasHovaldt
+```
