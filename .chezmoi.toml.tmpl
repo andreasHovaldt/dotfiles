@@ -16,6 +16,10 @@
     hasPixi = {{ $hasPixi }}
     hasBitwardenCli = {{ $hasBitwardenCli }}
 
+[edit]
+    command = "code"
+    args = ["--wait"]
+
 {{ if $hasBitwardenCli }}
 [bitwarden]
     unlock = "auto"

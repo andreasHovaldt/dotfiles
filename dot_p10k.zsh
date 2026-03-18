@@ -57,9 +57,8 @@
     newline                   # \n
     anaconda                  # conda environment
     virtualenv                # python virtual environment
-    pixi                      # pixi environment
-    #newline
-    prompt_char               # prompt symbol
+    pixi                      # Custom pixi segment
+    prompt_char               # Prompt symbol
   )
 
   # Right prompt segments.
@@ -89,11 +88,11 @@
   # Red prompt symbol if the last command failed.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS}_FOREGROUND=$red
   # Default prompt symbol.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='${PIXI_NEWLINE}❯'
   # Prompt symbol in command vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='${PIXI_NEWLINE}❮'
   # Prompt symbol in visual vi mode is the same as in command mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='❮'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='${PIXI_NEWLINE}❮'
   # Prompt symbol in overwrite vi mode is the same as in command mode.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
 
@@ -113,7 +112,16 @@
       
       # show the actual project name instead
       # p10k segment -f $grey -t "(${PIXI_PROJECT_NAME})"
-      p10k segment -f 242 -t "$PIXI_PROJECT_NAME - $PIXI_ENVIRONMENT_NAME"
+      p10k segment -f 242 -t "($PIXI_PROJECT_NAME - $PIXI_ENVIRONMENT_NAME)"
+    fi
+  }
+
+  # Hook to dynamically inject a newline into the prompt char
+  function p10k-on-pre-prompt() {
+    if [[ -n "$PIXI_PROJECT_NAME" || -n "$PIXI_ENVIRONMENT_NAME" ]]; then
+      typeset -g PIXI_NEWLINE=$'\n'
+    else
+      typeset -g PIXI_NEWLINE=''
     fi
   }
   # ------------------------------------------------------
