@@ -3,8 +3,6 @@
 {{- $shellTypeChoices := list "zsh" "bash" -}}
 {{- $shellType := promptChoiceOnce . "shellType" "What shell type does this machine use" $shellTypeChoices -}}
 
-{{- $hasBitwardenCli := promptBoolOnce . "hasBitwardenCli" "Does this machine have rbw (BitWarden CLI) set up (y/n)" -}}
-
 {{- $hasMiniForge := promptBoolOnce . "hasMiniForge" "Does this machine have MiniForge (y/n)" -}}
 
 {{- $hasPixi := promptBoolOnce . "hasPixi" "Does this machine have Pixi (y/n)" -}}
@@ -14,7 +12,6 @@
     shellType = {{ $shellType | quote }}
     hasMiniForge = {{ $hasMiniForge }}
     hasPixi = {{ $hasPixi }}
-    hasBitwardenCli = {{ $hasBitwardenCli }}
 
 [edit]
     command = "code"

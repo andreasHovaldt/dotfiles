@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+# exit immediately if rbw is already in $PATH
+type rbw >/dev/null 2>&1 && exit 0
+
+# install rbw
+case "$(uname -s)" in
+Linux)
+    # commands to install rbw on Linux
+    sudo pacman -S rbw
+    rbw config set base_url https://api.bitwarden.eu
+    rbw config set email {{ .email }}
+    rbw register
+    rbw login
+    ;;
+*)
+    echo "Unsupported OS"
+    exit 1
+    ;;
+esac
