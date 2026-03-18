@@ -12,19 +12,34 @@ sudo pacman -S chezmoi
 
 Install the following beforehand:
 
-### BitWarden CLI
+### rbw (Rust-based BitWarden CLI)
 
 Arch:
 
 ```bash
-sudo pacman -S bitwarden-cli
+sudo pacman -S rbw
 ```
 
-Then setup the correct server and login, e.g.:
+Setup the correct server and email, e.g.:
 
 ```bash
-bw config server https://vault.bitwarden.eu
-bw login
+rbw config set base_url https://api.bitwarden.eu
+rbw config set email <email>
+```
+
+Register the device using the [personal BitWarden API key](https://vault.bitwarden.eu/#/settings/security/security-keys):
+
+```bash
+rbw register
+```
+
+[_Docs: CLI Authentication via API key_](https://bitwarden.com/help/personal-api-key/)
+
+Lastly, login and sync local database:
+
+```bash
+rbw login
+rbw sync
 ```
 
 ### Pixi and/or MiniForge

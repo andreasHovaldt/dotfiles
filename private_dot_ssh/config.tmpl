@@ -1,6 +1,6 @@
-{{- $sshKeys := bitwardenFields "item" "SSH Key Locations" -}}
-{{- $sshAgcoHosts := bitwardenFields "item" "SSH Agco Hosts" -}}
-{{- $sshAAU := bitwarden "item" "9b0b93f3-5080-4d74-a542-b3a701733e6f" -}}
+{{- $sshKeys := rbwFields "SSH Key Locations" -}}
+{{- $sshAgcoHosts := rbwFields "SSH Agco Hosts" -}}
+{{- $sshAAU := rbw "9b0b93f3-5080-4d74-a542-b3a701733e6f" -}}
 
 Host *
   AddKeysToAgent yes
@@ -30,7 +30,7 @@ Host aau-*
 
 {{ if eq .chezmoi.hostname "sff" }}
 ## Local Hosts ##
-{{ $sshLocalHosts := bitwardenFields "item" "SSH Local Hosts" }}
+{{ $sshLocalHosts := rbwFields "SSH Local Hosts" }}
 Host nas
   User andreas
   HostName {{ $sshLocalHosts.nas.value }}
@@ -85,7 +85,7 @@ Host agco-fqc2
 
 Host aau-vpn
   HostName sshgw.aau.dk
-  User {{ $sshAAU.login.username }}
+  User {{ $sshAAU.data.username }}
 
 Host aau-datastorage
   HostName 10.92.0.164
@@ -94,5 +94,5 @@ Host aau-datastorage
 
 Host aau-ailab
   HostName ailab-fe01.srv.aau.dk
-  User {{ $sshAAU.login.username }}
+  User {{ $sshAAU.data.username }}
   ProxyJump aau-vpn

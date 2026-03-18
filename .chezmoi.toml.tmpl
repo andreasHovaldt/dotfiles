@@ -3,7 +3,7 @@
 {{- $shellTypeChoices := list "zsh" "bash" -}}
 {{- $shellType := promptChoiceOnce . "shellType" "What shell type does this machine use" $shellTypeChoices -}}
 
-{{- $hasBitwardenCli := promptBoolOnce . "hasBitwardenCli" "Does this machine have BitWardenCLI setup (y/n)" -}}
+{{- $hasBitwardenCli := promptBoolOnce . "hasBitwardenCli" "Does this machine have rbw (BitWarden CLI) set up (y/n)" -}}
 
 {{- $hasMiniForge := promptBoolOnce . "hasMiniForge" "Does this machine have MiniForge (y/n)" -}}
 
@@ -19,8 +19,3 @@
 [edit]
     command = "code"
     args = ["--wait"]
-
-{{ if $hasBitwardenCli }}
-[bitwarden]
-    unlock = "auto"
-{{ end }}
