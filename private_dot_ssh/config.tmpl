@@ -1,0 +1,94 @@
+Host *
+  AddKeysToAgent yes
+  IdentitiesOnly yes
+
+## SSH KEYS ###
+
+Host github.com
+  HostName github.com
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").github.value }}
+
+Host github-work
+  HostName github.com
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").agco.value }}
+
+Host bitbucket.org
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").agco.value }}
+
+Host *-proxmox
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").proxmox.value }}
+
+Host agco-*
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").agco.value }}
+
+Host aau-*
+  IdentityFile {{ (bitwardenFields "item" "SSH Key Locations").aau.value }}
+
+{{ if eq .chezmoi.hostname "sff" }}
+## Local Hosts ##
+
+Host nas
+  User andreas
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").nas.value }}
+  Port {{ (bitwardenFields "item" "SSH Local Hosts").nas_port.value }}
+
+Host wireguard-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user2.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").wireguard.value }}
+
+Host jellyfin-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user1.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").jellyfin.value }}
+
+Host docker-vm-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user1.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").docker_vm.value }}
+  
+Host web-server-local-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user1.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").web_server.value }}
+
+Host pelican-panel-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user2.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").pelican_panel.value }}
+
+Host pelican-node-proxmox
+  User {{ (bitwardenFields "item" "SSH Local Hosts").user2.value }}
+  HostName {{ (bitwardenFields "item" "SSH Local Hosts").pelican_node.value }}
+{{ end }}
+
+## AGCO Hosts ##
+
+Host agco-cluster
+  User {{ (bitwardenFields "item" "SSH Agco Hosts").user1.value }}
+  HostName {{ (bitwardenFields "item" "SSH Agco Hosts").cluster.value }}
+  Port {{ (bitwardenFields "item" "SSH Agco Hosts").cluster_port.value }}
+
+Host agco-cluster-x11
+  User {{ (bitwardenFields "item" "SSH Agco Hosts").user1.value }}
+  HostName {{ (bitwardenFields "item" "SSH Agco Hosts").cluster.value }}
+  Port {{ (bitwardenFields "item" "SSH Agco Hosts").cluster_port.value }}
+  ForwardX11 yes
+  ForwardX11Trusted yes
+  Compression yes
+
+Host agco-fqc2
+  User {{ (bitwardenFields "item" "SSH Agco Hosts").user2.value }}
+  HostName {{ (bitwardenFields "item" "SSH Agco Hosts").fqc2.value }}
+
+
+## AAU HOSTS ##
+
+Host aau-vpn
+  HostName sshgw.aau.dk
+  User {{ (bitwarden "item" "9b0b93f3-5080-4d74-a542-b3a701733e6f").login.username }}
+
+Host aau-datastorage
+  HostName 10.92.0.164
+  User debian
+  ProxyJump aau-vpn
+
+Host aau-ailab
+  HostName ailab-fe01.srv.aau.dk
+  User {{ (bitwarden "item" "9b0b93f3-5080-4d74-a542-b3a701733e6f").login.username }}
+  ProxyJump aau-vpn

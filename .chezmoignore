@@ -1,0 +1,8 @@
+{{ if ne .chezmoi.data.shellType "zsh" }}
+.zshrc
+.p10k.zsh
+{{ end }}
+
+{{ if ne .chezmoi.data.shellType "bash" }}
+.bashrc
+{{ end }}

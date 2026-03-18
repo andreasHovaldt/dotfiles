@@ -1,0 +1,71 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+{{- if eq .chezmoi.osRelease.prettyName "CachyOS" -}}
+source /usr/share/cachyos-zsh-config/cachyos-config.zsh
+{{- end -}}
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Tell shell where ssh agent is
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# Set terminal
+export TERMINAL=wezterm
+
+# Add local binaries to path
+export PATH="$HOME/.local/bin:$PATH"
+
+# Password window fix
+export GPG_TTY=$(tty)
+
+# Source VPN functions
+source ~/.config/pia-vpn/vpn-functions.sh
+
+# Alias
+alias open="xdg-open"
+
+{{- if .hasMiniForge -}}
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/{{- .chezmoi.username -}}/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/{{- .chezmoi.username -}}/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/{{- .chezmoi.username -}}/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/{{- .chezmoi.username -}}/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/home/{{- .chezmoi.username -}}/miniforge3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/home/{{- .chezmoi.username -}}/miniforge3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
+{{- end -}}
+
+
+{{- if .hasPixi -}}
+# Pixi - Add to path
+export PATH="/home/{{- .chezmoi.username -}}/.pixi/bin:$PATH"
+
+# Pixi - Autocompletion
+eval "$(pixi completion --shell zsh)"
+{{- end -}}
