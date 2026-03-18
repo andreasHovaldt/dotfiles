@@ -7,11 +7,19 @@ Install the following:
 ### BitWarden CLI
 
 Arch:
-´´´bash
-sudo pacman -S bitwarden-cli
-´´´
 
-### Pixi or MiniForge
+```bash
+sudo pacman -S bitwarden-cli
+```
+
+Then setup the correct server and login, e.g.:
+
+```bash
+bw config server https://vault.bitwarden.eu
+bw login
+```
+
+### Pixi and/or MiniForge
 
 Pixi for Linux:
 
