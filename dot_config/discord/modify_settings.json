@@ -1,0 +1,6 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $settings := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $settings = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{- $settings | setValueAtPath "SKIP_HOST_UPDATE" true | toPrettyJson -}}
