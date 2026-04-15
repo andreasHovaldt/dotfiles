@@ -30,7 +30,7 @@ source ~/.config/pia-vpn/vpn-functions.sh
 
 # Alias
 alias open="xdg-open"
-{{ if .hasMiniForge }}
+{{ if stat (joinPath .chezmoi.homeDir ".pixi/bin/pixi") }}
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/{{- .chezmoi.username -}}/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -60,10 +60,17 @@ unset __mamba_setup
 # <<< mamba initialize <<<
 {{ end }}
 
-{{ if .hasPixi }}
+{{ if stat (joinPath .chezmoi.homeDir "miniforge3/bin/conda") }}
 # Pixi - Add to path
 export PATH="/home/{{- .chezmoi.username -}}/.pixi/bin:$PATH"
 
 # Pixi - Autocompletion
 eval "$(pixi completion --shell zsh)"
+{{ end }}
+
+{{ if lookPath "npm" }}
+# Force global NPM packages to be installed locally
+#   mkdir ~/.npm-global
+#   npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
 {{ end }}

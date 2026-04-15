@@ -24,6 +24,7 @@ Host *-proxmox
 
 Host agco-*
   IdentityFile {{ $sshKeys.agco.value }}
+  ForwardAgent yes
 
 Host aau-*
   IdentityFile {{ $sshKeys.aau.value }}

@@ -3,15 +3,9 @@
 {{- $shellTypeChoices := list "zsh" "bash" -}}
 {{- $shellType := promptChoiceOnce . "shellType" "What shell type does this machine use" $shellTypeChoices -}}
 
-{{- $hasMiniForge := promptBoolOnce . "hasMiniForge" "Does this machine have MiniForge (y/n)" -}}
-
-{{- $hasPixi := promptBoolOnce . "hasPixi" "Does this machine have Pixi (y/n)" -}}
-
 [data]
     email = {{ $email | quote }}
     shellType = {{ $shellType | quote }}
-    hasMiniForge = {{ $hasMiniForge }}
-    hasPixi = {{ $hasPixi }}
 
 [edit]
     command = "code"
