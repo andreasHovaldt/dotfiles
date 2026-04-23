@@ -97,3 +97,12 @@ Host aau-ailab
   HostName ailab-fe01.srv.aau.dk
   User {{ $sshAAU.data.username }}
   ProxyJump aau-vpn
+
+{{ if eq .chezmoi.hostname "yoga" }}
+{{ $sshLocalHosts := rbwFields "SSH Local Hosts" }}
+## Alfredo HOSTS ##
+Host opti
+  User {{ $sshLocalHosts.user1.value }}
+  HostName {{ $sshLocalHosts.opti.value }}
+  IdentityFile {{ $sshKeys.opti.value }}
+{{ end }}
