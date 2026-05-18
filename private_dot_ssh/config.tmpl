@@ -29,6 +29,9 @@ Host agco-*
 Host aau-*
   IdentityFile {{ $sshKeys.aau.value }}
 
+Host ssh.cloud.sdu.dk
+  IdentityFile {{ $sshKeys.ucloud.value }}
+
 {{ if eq .chezmoi.hostname "sff" }}
 ## Local Hosts ##
 {{ $sshLocalHosts := rbwFields "SSH Local Hosts" }}
